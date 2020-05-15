@@ -1,7 +1,4 @@
-//will need to create the hours in a day... either coded in html or dynamic in JS
-//will need to be able to update hours on given time elements
-//need to be able to create writable area/form
-//need a btn to save userInput to the inspector
+
 //1. get time
 var currentDate = moment().format("dddd, MMMM Do YYYY");
 console.log(currentDate);
@@ -9,35 +6,31 @@ $("#currentDay").text(currentDate);
 var currentHour = moment().format("H");
 console.log(currentHour);
 var hourArray = [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23];
-//2. dynamically append input area
-//add the time styles
-// <div class="row">
-//        <div class="col time-block" id="time-block">
-//            0900
-//        </div>
-//        <textarea class="form-control col-8" id="textArea"> </textarea>
-//        <div class="col saveBtn text-center fas fa-lock"></div>
-//    </div>
+
+//Create for loop for array
+
 for (var i = 0; i < hourArray.length; i++) {
-    var d1 = $("<div>");
-    //<div></div>
-    d1.attr("class", "row");
-    //<div class="row"></div>
-    var d2 = $("<div>");
-    //<div></div>
-    d2.attr("class", "col");
-    d2.attr("id", "time-block");
+    //create div in the DOM
+    var div1 = $("<div>");
+    //specify info in div1
+    div1.attr("class", "row");
+    //create row 2 for time block
+    var div2 = $("<div>");
+    //assign attriubutes for time block
+    div2.attr("class", "col");
+    div2.attr("id", "time-block");
     if (hourArray[i] <= 12) {
         if (hourArray[i] == 12) {
-            d2.text(hourArray[i] + " PM");
+            div2.text(hourArray[i] + " PM");
         } else {
-            d2.text(hourArray[i] + " AM");
+            div2.text(hourArray[i] + " AM");
         }
     } else {
-        d2.text(hourArray[i] - 12 + " PM");
+        div2.text(hourArray[i] - 12 + " PM");
     }
-    var textarea = $("<textarea>");
     //<textarea></textarea>
+    var textarea = $("<textarea>");
+
     if (hourArray[i] == currentHour) {
         textarea.attr("class", "form-control col-8 present");
     }
@@ -48,12 +41,12 @@ for (var i = 0; i < hourArray.length; i++) {
         textarea.attr("class", "form-control col-8 future");
     }
     textarea.attr("id", hourArray[i]);
-    var d3 = $("<div>");
-    d3.attr("class", "col saveBtn text-center fas fa-lock");
-    d1.append(d2);
-    d1.append(textarea);
-    d1.append(d3);
-    $(".container").append(d1);
+    var div3 = $("<div>");
+    div3.attr("class", "col saveBtn text-center fas fa-lock");
+    div1.append(div2);
+    div1.append(textarea);
+    div1.append(div3);
+    $(".container").append(div1);
 }
 //3. setting data local storage (recommended grab hour and set to userinput)
 $(".saveBtn").click(function (event) {
@@ -67,17 +60,10 @@ $(".saveBtn").click(function (event) {
     var userinput = $(this).siblings(".form-control").val();
     //localstorage: hour:userinput
     localStorage.setItem(hour, userinput);
-    // // Return from function early if submitted todoText is blank
-    // if (todoText === "") {
-    //   return;
-    // }
-    // //does this need json.parse?
-    // // Add new todoText to textarea,
-    // textarea.text(todoText);
-    // d2.append(textarea);
-    // Re-render the list
-    //renderTodos();
+
 });
+
+
 $("#6").val(localStorage.getItem("6"));
 $("#7").val(localStorage.getItem("7"));
 $("#8").val(localStorage.getItem("8"));
